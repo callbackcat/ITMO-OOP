@@ -71,13 +71,14 @@ namespace Isu.Services
         public List<Student> FindStudents(string groupName)
         {
             Group group = FindGroup(groupName);
-            return _assignments.FirstOrDefault(g => g.Key == group).Value;
+            return group is null ? Enumerable.Empty<Student>().ToList()
+                : _assignments.FirstOrDefault(g => g.Key == group).Value;
         }
 
         public List<Student> FindStudents(CourseNumber courseNumber)
         {
             return _students
-                .Where(s => s.Group.CourseNumber == courseNumber)
+                .Where(s => s.Group.CourseNumber.Equals(courseNumber))
                 .ToList();
         }
 
@@ -89,7 +90,7 @@ namespace Isu.Services
         public List<Group> FindGroups(CourseNumber courseNumber)
         {
             return _groups
-                .Where(g => g.CourseNumber.Value == courseNumber.Value)
+                .Where(g => g.CourseNumber.Equals(courseNumber))
                 .ToList();
         }
 
