@@ -72,7 +72,7 @@ namespace Isu.Services
         {
             Group group = FindGroup(groupName);
             return group is null ? Enumerable.Empty<Student>().ToList()
-                : _assignments.FirstOrDefault(g => g.Key == group).Value;
+                : _students.FindAll(s => s.Group.GroupName == groupName);
         }
 
         public List<Student> FindStudents(CourseNumber courseNumber)
