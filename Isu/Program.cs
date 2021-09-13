@@ -1,4 +1,7 @@
-﻿namespace Isu
+﻿using Isu.Models;
+using Isu.Services;
+
+namespace Isu
 {
     internal class Program
     {
