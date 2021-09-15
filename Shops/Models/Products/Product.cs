@@ -1,7 +1,7 @@
 using System;
 using Shops.Tools;
 
-namespace Shops.Models.Product
+namespace Shops.Models.Products
 {
     public class Product
     {

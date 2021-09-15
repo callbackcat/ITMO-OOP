@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shops.Models;
-using Shops.Models.Product;
+using Shops.Models.Products;
 using Shops.Tools;
 
 namespace Shops.Services

@@ -1,6 +1,6 @@
 using System;
 using Shops.Models;
-using Shops.Models.Product;
+using Shops.Models.Products;
 
 namespace Shops.Services
 {

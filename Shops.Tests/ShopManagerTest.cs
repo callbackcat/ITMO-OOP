@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Shops.Services;
 using Shops.Models;
 using NUnit.Framework;
-using Shops.Models.Product;
+using Shops.Models.Products;
 using Shops.Tools;
 
 namespace Shops.Tests

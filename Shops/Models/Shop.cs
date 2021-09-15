@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shops.Models.Product;
+using Shops.Models.Products;
 using Shops.Tools;
 
 namespace Shops.Models
 {
     public class Shop
     {
-        private readonly Dictionary<Product.Product, ProductInfo> _products;
+        private readonly Dictionary<Product, ProductInfo> _products;
         private string _name;
         private string _address;
         private Guid _id;
@@ -24,10 +24,10 @@ namespace Shops.Models
             _name = name;
             _address = address;
             _id = Guid.NewGuid();
-            _products = new Dictionary<Product.Product, ProductInfo>();
+            _products = new Dictionary<Product, ProductInfo>();
         }
 
-        public List<Product.Product> AddProducts(Product.Product product, ProductInfo info)
+        public List<Product> AddProducts(Product product, ProductInfo info)
         {
             if (_products.ContainsKey(product))
             {
@@ -48,10 +48,10 @@ namespace Shops.Models
                 _products.Add(product, info);
             }
 
-            return new List<Product.Product>(new Product.Product[info.Count]);
+            return new List<Product>(new Product[info.Count]);
         }
 
-        public List<Product.Product> Buy(Person client, params KeyValuePair<Product.Product, int>[] products)
+        public List<Product> Buy(Person client, params KeyValuePair<Product, int>[] products)
         {
             if (products.Any(p => p.Value <= 0))
             {
@@ -85,7 +85,7 @@ namespace Shops.Models
             return products.Select(p => p.Key).ToList();
         }
 
-        public KeyValuePair<Product.Product, ProductInfo> GetProductInfo(Guid id)
+        public KeyValuePair<Product, ProductInfo> GetProductInfo(Guid id)
         {
             if (_products.All(p => p.Key.Id != id))
             {
@@ -95,7 +95,7 @@ namespace Shops.Models
             return _products.Single(p => p.Key.Id == id);
         }
 
-        public Product.Product ChangePrice(Product.Product product, double newPrice)
+        public Product ChangePrice(Product product, double newPrice)
         {
             if (product is null || !_products.ContainsKey(product))
             {
