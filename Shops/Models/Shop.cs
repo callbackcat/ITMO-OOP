@@ -51,8 +51,10 @@ namespace Shops.Models
             return new List<Product>(new Product[info.Count]);
         }
 
-        public List<Product> Buy(Person client, params KeyValuePair<Product, int>[] products)
+        public List<Product> Buy(Person client, ShoppingList list)
         {
+            Dictionary<Product, int> products = list.GetList();
+
             if (products.Any(p => p.Value <= 0))
             {
                 throw new ShopException("The product's count must be greater than zero");

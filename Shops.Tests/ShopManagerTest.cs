@@ -23,15 +23,18 @@ namespace Shops.Tests
             const int moneyBefore = 100;
             const int productPrice = 10;
             const int productCount = 5;
-            const int productToBuyCount = 1;
+            const int productToBuyCount = 2;
 
             Shop shop = _shopManager.Create("Test shop", "Test Address");
             Product product = _shopManager.RegisterProduct("Test product");
             var person = new Person("Test customer", moneyBefore);
             var productInfo = new ProductInfo(productPrice, productCount);
             
+            var shoppingList = new ShoppingList();
+            shoppingList.AddToList(product, productToBuyCount);
+            
             shop.AddProducts(product, productInfo);
-            shop.Buy(person, new KeyValuePair<Product, int>(product, productToBuyCount));
+            shop.Buy(person, shoppingList);
 
             Assert.AreEqual(moneyBefore - productPrice * productToBuyCount, person.Balance);
             Assert.AreEqual(productCount - productToBuyCount, 
@@ -61,20 +64,30 @@ namespace Shops.Tests
         [Test]
         public void FindShopWithTheBestPrice()
         {
-            const int productPrice = 100;
-            const int biggerProductPrice = productPrice * 2;
-            const int productCount = 10;
+            const int cakePrice = 1000;
+            const int muffinPrice = 100;
+            const int biggerCakePrice = cakePrice * 2;
+            const int biggerMuffinPrice = muffinPrice * 2;
+            const int cakeCount = 2;
+            const int muffinCount = 5;
             
             Shop cheapShop = _shopManager.Create("Cheap shop", "Test Address");
             Shop expensiveShop = _shopManager.Create("Expensive shop", "Test Address 2");
-            Product product = _shopManager.RegisterProduct("Test product");
+            Product cake = _shopManager.RegisterProduct("Cake");
+            Product muffin = _shopManager.RegisterProduct("Muffin");
             
-            cheapShop.AddProducts(product, new ProductInfo(productPrice, productCount));
-            expensiveShop.AddProducts(product, new ProductInfo(productPrice, productCount));
-            expensiveShop.ChangePrice(product, biggerProductPrice);
+            var shoppingList = new ShoppingList();
+            shoppingList.AddToList(cake, cakeCount);
+            shoppingList.AddToList(muffin, muffinCount);
+            
+            cheapShop.AddProducts(cake, new ProductInfo(cakePrice, cakeCount));
+            cheapShop.AddProducts(muffin, new ProductInfo(muffinPrice, muffinCount));
+            
+            expensiveShop.AddProducts(cake, new ProductInfo(biggerCakePrice, cakeCount));
+            expensiveShop.AddProducts(muffin, new ProductInfo(biggerMuffinPrice, muffinCount));
             
             Assert.AreEqual(cheapShop, _shopManager
-                .FindShopWithLowestPrice(product.Id, productCount));
+                .FindShopWithLowestPrice(shoppingList));
         }
 
         [Test]
@@ -88,9 +101,12 @@ namespace Shops.Tests
             Shop shop = _shopManager.Create("Test shop", "Test Address");
             Product product = _shopManager.RegisterProduct("Test product");
             var person = new Person("Test customer", personBalance);
+            
+            var shoppingList = new ShoppingList();
+            shoppingList.AddToList(product, productToBuyCount);
                 
             shop.AddProducts(product, new ProductInfo(productPrice, productCount));
-            shop.Buy(person, new KeyValuePair<Product, int>(product, productToBuyCount));
+            shop.Buy(person, shoppingList);
             
             Assert.AreEqual(productCount - productToBuyCount, 
                 shop.GetProductInfo(product.Id).Value.Count);
@@ -99,10 +115,10 @@ namespace Shops.Tests
                 person.Balance);
             
             // Trying to buy products from empty shop
-            shop.Buy(person, new KeyValuePair<Product, int>(product, productToBuyCount));
+            shop.Buy(person, shoppingList);
             Assert.Catch<ShopException>(() =>
             {
-                shop.Buy(person, new KeyValuePair<Product, int>(product, productToBuyCount));
+                shop.Buy(person, shoppingList);
             });
         }
     }

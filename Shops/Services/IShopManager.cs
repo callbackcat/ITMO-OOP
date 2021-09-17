@@ -8,6 +8,6 @@ namespace Shops.Services
     {
         Shop Create(string name, string address);
         Product RegisterProduct(string name);
-        Shop FindShopWithLowestPrice(Guid id, uint count);
+        Shop FindShopWithLowestPrice(ShoppingList list);
     }
 }

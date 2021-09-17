@@ -32,34 +32,47 @@ namespace Shops.Services
             return product;
         }
 
-        public Shop FindShopWithLowestPrice(Guid id, uint count)
+        public Shop FindShopWithLowestPrice(ShoppingList list)
         {
-            double lowestPrice = double.MaxValue;
+            Dictionary<Product, int> products = list.GetList();
+            double minSum = double.MaxValue;
             Shop cheapestShop = null;
-            ProductInfo info = null;
+            double totalSum = 0;
 
             foreach (Shop shop in _shops)
             {
-                try
+                foreach (var product in products)
                 {
-                    info = shop.GetProductInfo(id).Value;
-                }
-                catch (ShopException)
-                {
-                    continue;
+                    ProductInfo info;
+                    try
+                    {
+                        info = shop.GetProductInfo(product.Key.Id).Value;
+                    }
+                    catch (ShopException)
+                    {
+                        break;
+                    }
+
+                    if (info.Count < product.Value)
+                    {
+                        break;
+                    }
+
+                    totalSum += info.Price * product.Value;
                 }
 
-                if (info.Price < lowestPrice && info.Count >= count)
+                if (totalSum != 0 && totalSum < minSum)
                 {
-                        lowestPrice = info.Price;
-                        cheapestShop = shop;
+                    minSum = totalSum;
+                    cheapestShop = shop;
                 }
+
+                totalSum = 0;
             }
 
-            if (info is null)
+            if (cheapestShop is null)
             {
-                throw new ShopException("None of the stores " +
-                                        $"contain enough product with id: {id}");
+                throw new ShopException("None of the stores contain enough products");
             }
 
             return cheapestShop;
