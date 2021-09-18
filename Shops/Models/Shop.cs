@@ -9,8 +9,7 @@ namespace Shops.Models
     public class Shop
     {
         private readonly Dictionary<Product, ProductInfo> _products;
-        private string _name;
-        private string _address;
+        private Guid _id;
 
         public Shop(string name, string address)
         {
@@ -20,13 +19,14 @@ namespace Shops.Models
             if (string.IsNullOrWhiteSpace(address))
                 throw new ShopException("Invalid address");
 
-            _name = name;
-            _address = address;
-            Id = Guid.NewGuid();
+            Name = name;
+            Address = address;
+            _id = Guid.NewGuid();
             _products = new Dictionary<Product, ProductInfo>();
         }
 
-        public Guid Id { get; }
+        public string Name { get; }
+        public string Address { get; }
 
         public Product AddProducts(Product product, ProductInfo info)
         {

@@ -32,9 +32,10 @@ namespace Shops.Services
             return product;
         }
 
-        public Shop FindShop(Guid id)
+        public Shop FindShop(string name, string address)
         {
-            return _shops.Find(s => s.Id == id);
+            return _shops.Find(s => s.Name == name
+                                    && s.Address == address);
         }
 
         public Shop FindShopWithLowestPrice(ShoppingList list)

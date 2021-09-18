@@ -9,6 +9,6 @@ namespace Shops.Services
         Shop Create(string name, string address);
         Product RegisterProduct(string name);
         Shop FindShopWithLowestPrice(ShoppingList list);
-        Shop FindShop(Guid id);
+        Shop FindShop(string name, string address);
     }
 }

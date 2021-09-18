@@ -62,7 +62,7 @@ namespace Shops.Tests
         }
 
         [Test]
-        public void FindShopWithTheBestPrice_ReturnThatShop()
+        public void FindShopWithTheBestPrice_ShopWasFound()
         {
             const int cakePrice = 1000;
             const int muffinPrice = 100;
@@ -116,7 +116,7 @@ namespace Shops.Tests
         }
 
         [Test]
-        public void TryToBuyProductsFromEmptyShop_CatchException()
+        public void TryToBuyProductsFromEmptyShop_ThrowException()
         {
             const int personBalance = 1000;
             const int productPrice = 100;
