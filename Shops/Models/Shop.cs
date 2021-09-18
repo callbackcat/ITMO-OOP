@@ -11,7 +11,6 @@ namespace Shops.Models
         private readonly Dictionary<Product, ProductInfo> _products;
         private string _name;
         private string _address;
-        private Guid _id;
 
         public Shop(string name, string address)
         {
@@ -23,11 +22,13 @@ namespace Shops.Models
 
             _name = name;
             _address = address;
-            _id = Guid.NewGuid();
+            Id = Guid.NewGuid();
             _products = new Dictionary<Product, ProductInfo>();
         }
 
-        public List<Product> AddProducts(Product product, ProductInfo info)
+        public Guid Id { get; }
+
+        public Product AddProducts(Product product, ProductInfo info)
         {
             if (_products.ContainsKey(product))
             {
@@ -48,7 +49,7 @@ namespace Shops.Models
                 _products.Add(product, info);
             }
 
-            return new List<Product>(new Product[info.Count]);
+            return product;
         }
 
         public List<Product> Buy(Person client, ShoppingList list)

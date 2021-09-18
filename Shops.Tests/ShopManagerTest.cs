@@ -62,7 +62,7 @@ namespace Shops.Tests
         }
 
         [Test]
-        public void FindShopWithTheBestPrice()
+        public void FindShopWithTheBestPrice_ReturnThatShop()
         {
             const int cakePrice = 1000;
             const int muffinPrice = 100;
@@ -113,9 +113,26 @@ namespace Shops.Tests
             
             Assert.AreEqual(personBalance - productPrice * productToBuyCount, 
                 person.Balance);
+        }
+
+        [Test]
+        public void TryToBuyProductsFromEmptyShop_CatchException()
+        {
+            const int personBalance = 1000;
+            const int productPrice = 100;
+            const int productCount = 5;
+            const int productToBuyCount = 5;
             
-            // Trying to buy products from empty shop
+            Shop shop = _shopManager.Create("Test shop", "Test Address");
+            Product product = _shopManager.RegisterProduct("Test product");
+            var person = new Person("Test customer", personBalance);
+            
+            var shoppingList = new ShoppingList();
+            shoppingList.AddToList(product, productToBuyCount);
+                
+            shop.AddProducts(product, new ProductInfo(productPrice, productCount));
             shop.Buy(person, shoppingList);
+            
             Assert.Catch<ShopException>(() =>
             {
                 shop.Buy(person, shoppingList);

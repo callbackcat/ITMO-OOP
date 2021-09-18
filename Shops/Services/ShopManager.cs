@@ -27,9 +27,14 @@ namespace Shops.Services
 
         public Product RegisterProduct(string name)
         {
-            var product = new Product(name);
+            var product = new Product(name, Guid.NewGuid());
             _productsRegister.Add(product);
             return product;
+        }
+
+        public Shop FindShop(Guid id)
+        {
+            return _shops.Find(s => s.Id == id);
         }
 
         public Shop FindShopWithLowestPrice(ShoppingList list)
@@ -68,11 +73,6 @@ namespace Shops.Services
                 }
 
                 totalSum = 0;
-            }
-
-            if (cheapestShop is null)
-            {
-                throw new ShopException("None of the stores contain enough products");
             }
 
             return cheapestShop;
