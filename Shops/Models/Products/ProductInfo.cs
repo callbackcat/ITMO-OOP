@@ -13,7 +13,15 @@ namespace Shops.Models.Products
             Count = count;
         }
 
-        public double Price { get; set; }
-        public uint Count { get; set; }
+        public double Price { get; private set; }
+        public uint Count { get; internal set; }
+
+        internal void ChangePrice(double newPrice)
+        {
+            if (newPrice <= 0)
+                throw new ShopException("Invalid new product's price");
+
+            Price = newPrice;
+        }
     }
 }

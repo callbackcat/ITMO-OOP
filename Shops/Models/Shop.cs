@@ -88,14 +88,16 @@ namespace Shops.Models
             return products.Select(p => p.Key).ToList();
         }
 
-        public KeyValuePair<Product, ProductInfo> GetProductInfo(Guid id)
+        public ProductInfo GetProductInfo(Guid id)
         {
             if (_products.All(p => p.Key.Id != id))
             {
                 throw new ShopException("The shop doesn't contain the product");
             }
 
-            return _products.Single(p => p.Key.Id == id);
+            return _products
+                .Single(p => p.Key.Id == id)
+                .Value;
         }
 
         public Product ChangePrice(Product product, double newPrice)
@@ -108,7 +110,7 @@ namespace Shops.Models
             _products
                 .Single(p => p.Key.Id == product.Id)
                 .Value
-                .Price = newPrice;
+                .ChangePrice(newPrice);
 
             return product;
         }

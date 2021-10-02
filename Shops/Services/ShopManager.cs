@@ -32,10 +32,14 @@ namespace Shops.Services
             return product;
         }
 
-        public Shop FindShop(string name, string address)
+        public Shop FindShopByName(string name)
         {
-            return _shops.Find(s => s.Name == name
-                                    && s.Address == address);
+            return _shops.Find(s => s.Name == name);
+        }
+
+        public Shop FindShopByAddress(string address)
+        {
+            return _shops.Find(s => s.Address == address);
         }
 
         public Shop FindShopWithLowestPrice(ShoppingList list)
@@ -52,7 +56,7 @@ namespace Shops.Services
                     ProductInfo info;
                     try
                     {
-                        info = shop.GetProductInfo(product.Key.Id).Value;
+                        info = shop.GetProductInfo(product.Key.Id);
                     }
                     catch (ShopException)
                     {

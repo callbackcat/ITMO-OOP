@@ -38,7 +38,7 @@ namespace Shops.Tests
 
             Assert.AreEqual(moneyBefore - productPrice * productToBuyCount, person.Balance);
             Assert.AreEqual(productCount - productToBuyCount, 
-                shop.GetProductInfo(product.Id).Value.Count);
+                shop.GetProductInfo(product.Id).Count);
         }
         
         [Test]
@@ -54,11 +54,11 @@ namespace Shops.Tests
             
             shop.AddProducts(product, new ProductInfo(productPrice, productCount));
             Assert.AreEqual(productInfo.Price, 
-                shop.GetProductInfo(product.Id).Value.Price);
+                shop.GetProductInfo(product.Id).Price);
 
             shop.ChangePrice(product, newProductPrice);
             Assert.AreEqual(newProductPrice, 
-                shop.GetProductInfo(product.Id).Value.Price);
+                shop.GetProductInfo(product.Id).Price);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Shops.Tests
             shop.Buy(person, shoppingList);
             
             Assert.AreEqual(productCount - productToBuyCount, 
-                shop.GetProductInfo(product.Id).Value.Count);
+                shop.GetProductInfo(product.Id).Count);
             
             Assert.AreEqual(personBalance - productPrice * productToBuyCount, 
                 person.Balance);
