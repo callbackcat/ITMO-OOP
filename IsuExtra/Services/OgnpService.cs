@@ -135,7 +135,7 @@ namespace IsuExtra.Services
                 .FirstOrDefault(c => c.Value.Contains(stream.Key))
                 .Key;
 
-            if (student.Group.GetCourseIdentifier == course.CourseIdentifier)
+            if (student.Group.CourseIdentifier == course.CourseIdentifier)
             {
                 throw new IsuException("Student can't enroll to" +
                                        "course from the same megafacultaty");
@@ -186,13 +186,8 @@ namespace IsuExtra.Services
             return _groups[group];
         }
 
-        public IReadOnlyList<Student> GetUnenrolledStudents(string groupName)
+        public IReadOnlyList<Student> GetUnenrolledStudents()
         {
-            if (string.IsNullOrWhiteSpace(groupName))
-            {
-                throw new IsuException("Invalid group name");
-            }
-
             IReadOnlyList<Student> allStudents = _isuService.GetAllStudents();
             IReadOnlyList<Student> ognpStudents = _groups
                 .SelectMany(g => g.Value)

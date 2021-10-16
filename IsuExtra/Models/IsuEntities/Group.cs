@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using Isu.Tools;
-using IsuExtra.Attributes;
 using IsuExtra.Models.Lessons;
 
 namespace IsuExtra.Models.IsuEntities
 {
     public class Group
     {
+        private const int MinGroupNameLength = 5;
+        private const int MaxGroupNumber = 15;
         private readonly List<Lesson> _lessons;
+
         public Group(string groupName)
         {
-            if (groupName.Length < 5 || !char.IsLetter(groupName[0]))
+            if (groupName.Length < MinGroupNameLength || !char.IsLetter(groupName[0]))
             {
                 throw new IsuException("Invalid course name");
             }
@@ -23,7 +25,8 @@ namespace IsuExtra.Models.IsuEntities
                 throw new IsuException("Invalid course number");
             }
 
-            if (!uint.TryParse(groupName.Substring(3, 2), out uint groupNumber) || groupNumber > 12)
+            if (!uint.TryParse(groupName.Substring(3, 2), out uint groupNumber)
+                || groupNumber > MaxGroupNumber)
             {
                 throw new IsuException("Invalid group number");
             }
@@ -37,16 +40,11 @@ namespace IsuExtra.Models.IsuEntities
         internal string GroupName { get; }
         internal uint GroupNumber { get; }
         internal CourseNumber CourseNumber { get; }
-        internal char GetCourseIdentifier => GroupName[2];
-        internal IReadOnlyList<Lesson> Lessons => _lessons.AsReadOnly();
-
-        // Stack Trace to prohibit group's change by invalid methods
+        internal char CourseIdentifier => GroupName[2];
+        internal IReadOnlyList<Lesson> Lessons => _lessons;
         public void AddNewLesson(Lesson lesson)
         {
-            StackFrame stackFrame = new StackTrace(true).GetFrames()[1];
-            Attribute attr = (stackFrame.GetMethod() ?? throw new IsuException("Prohibited invoke"))
-                .GetCustomAttribute(typeof(AllowedToAddLessonAttribute));
-            _ = attr ?? throw new IsuException("Prohibited changing of group's lessons");
+            _ = lesson ?? throw new IsuException("Invalid lesson reference");
             _lessons.Add(lesson);
         }
     }

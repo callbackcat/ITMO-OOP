@@ -1,6 +1,5 @@
-using System.Linq;
+using System;
 using Isu.Tools;
-using IsuExtra.Attributes;
 using IsuExtra.Models.IsuEntities;
 using IsuExtra.Models.Lessons;
 using IsuExtra.Models.OgnpEntities;
@@ -19,71 +18,81 @@ namespace IsuExtra.Tests
         {
             _ognpService = new OgnpService();
             _isuService = new IsuService();
+            _isuService.AddGroup("M3206");
         }
 
         [Test]
         public void AddStudentToOgnpGroup_OgnpGroupContainsStudent()
         {
-            Group group = _isuService.AddGroup("M3206");
-            Student student = _isuService.AddStudent(group, "Mr.Test");
+            const int groupCapacity = 20;
+            
+            Student student = _isuService.AddStudent(_isuService.FindGroup("M3206"), "Mr.Test");
             
             OgnpCourse course = _ognpService.AddOgnpCourse("Cyber security", 'K');
             StudyStream stream = _ognpService.AddStudyStream(course, "CYB-1");
-            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", 20);
+            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", groupCapacity);
             
             _ognpService.AddStudentToGroup(student, ognpGroup);
-            Assert.That(_ognpService.GetGroups()[ognpGroup].Contains(student));
+            CollectionAssert.Contains(_ognpService.GetGroups()[ognpGroup], student);
         }
 
         [Test]
         public void ReachMaxStudentPerOgnpGroup_ThrowException()
         {
-            Group group = _isuService.AddGroup("M3206");
+            const int groupCapacity = 20;
             
             OgnpCourse course = _ognpService.AddOgnpCourse("Cyber security", 'K');
             StudyStream stream = _ognpService.AddStudyStream(course, "CYB-1");
-            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", 20);
+            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", groupCapacity);
+            
+            for (int i = 0; i < groupCapacity; i++)
+            {
+                _ognpService.AddStudentToGroup(new Student(_isuService.FindGroup("M3206"),
+                    $"Student №{i}"), ognpGroup);
+            }
             
             Assert.Catch<IsuException>(() =>
             {
-                for (int i = 0; i < 21; i++)
-                {
-                    _ognpService.AddStudentToGroup(new Student(group, $"Student №{i}"), ognpGroup);
-                }
+                _ognpService.AddStudentToGroup(new Student(_isuService.FindGroup("M3206"),
+                    "Extra Student"), ognpGroup);
             });
         }
 
         [Test]
         public void RemoveStudentFromCourse_TheStudentWasRemoved()
         {
-            Group group = _isuService.AddGroup("M3206");
-            Student student = _isuService.AddStudent(group, "Mr.Test");
+            const int groupCapacity = 20;
+            
+            Student student = _isuService.AddStudent(_isuService.FindGroup("M3206"),
+                "Mr.Test");
             
             OgnpCourse course = _ognpService.AddOgnpCourse("Cyber security", 'K');
             StudyStream stream = _ognpService.AddStudyStream(course, "CYB-1");
-            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", 20);
+            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", groupCapacity);
 
             _ognpService.AddStudentToGroup(student, ognpGroup);
             _ognpService.RemoveStudentFromCourse(student, course);
-            Assert.That(!_ognpService.GetStudentsList(ognpGroup).Contains(student));
+            CollectionAssert.DoesNotContain(_ognpService.GetStudentsList(ognpGroup), student);
         }
 
         [Test]
-        [AllowedToAddLesson]
         public void AddStudentWithScheduleIntersection_ThrowException()
         {
-            Group group = _isuService.AddGroup("M3206");
-            Student student = _isuService.AddStudent(group, "Mr.Test");
+            const int groupCapacity = 20;
+            
+            Student student = _isuService.AddStudent(_isuService.FindGroup("M3206"), "Mr.Test");
             
             OgnpCourse course = _ognpService.AddOgnpCourse("Cyber security", 'K');
             StudyStream stream = _ognpService.AddStudyStream(course, "CYB-1");
-            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", 20);
+            OgnpGroup ognpGroup = _ognpService.AddOgnpGroup(stream, "Group 1", groupCapacity);
+
+            var time = Convert.ToDateTime("12/10/2021 13:30");
             
             ognpGroup.AddNewOgnpLesson(new Lesson("Anton", "228",
-                new LessonTime("12/10/2021 13:30"))); 
+                new LessonTime(time))); 
             
             student.Group.AddNewLesson(new Lesson("Anton", "228",
-                new LessonTime("12/10/2021 13:20")));
+                new LessonTime(time)));
 
             Assert.Catch<IsuException>(() =>
             {

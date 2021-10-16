@@ -7,6 +7,7 @@ namespace IsuExtra.Services
 {
     public class IsuService
     {
+        private const int GroupCapacity = 30;
         private readonly List<Student> _students;
         private readonly List<Group> _groups;
         private readonly Dictionary<Group, List<Student>> _assignments;
@@ -18,7 +19,7 @@ namespace IsuExtra.Services
             _assignments = new Dictionary<Group, List<Student>>();
         }
 
-        public List<Student> GetAllStudents() => _students;
+        public IReadOnlyList<Student> GetAllStudents() => _students;
 
         public Group AddGroup(string name)
         {
@@ -47,7 +48,7 @@ namespace IsuExtra.Services
                 throw new IsuException($"Assignments doesn't contain group: {group}");
             }
 
-            if (_assignments[group].Count > 30)
+            if (_assignments[group].Count > GroupCapacity)
             {
                 throw new IsuException("The group contains maximum number of students");
             }
