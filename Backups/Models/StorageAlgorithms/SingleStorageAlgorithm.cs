@@ -12,9 +12,9 @@ namespace Backups.Models.StorageAlgorithms
         public RestorePoint Restore(string path, IReadOnlyList<FileInfo> files, DateTime time)
         {
             var repository = new WindowsRepository();
-            Storage storage = repository.CreateSingleStorage(path, files, time);
+            List<Storage> storage = repository.CreateStorages(path, files, time, this);
 
-            return new RestorePoint(new List<Storage> { storage }, time);
+            return new RestorePoint(storage, time);
         }
     }
 }
