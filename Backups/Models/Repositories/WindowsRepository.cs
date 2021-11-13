@@ -18,7 +18,7 @@ namespace Backups.Models.Repositories
                 case SingleStorageAlgorithm:
                 {
                     storage.Add(new Storage());
-                    string newPath = $"{path}\\RestorePoint_{time:dd/MM/yyyy_HH-mm-ss}.zip";
+                    string newPath = $"{path}{Path.DirectorySeparatorChar}RestorePoint_{time:dd/MM/yyyy_HH-mm-ss}.zip";
 
                     using ZipArchive archive = ZipFile.Open(newPath, ZipArchiveMode.Create);
                     {
