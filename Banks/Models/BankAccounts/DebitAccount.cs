@@ -22,6 +22,7 @@ namespace Banks.Models.BankAccounts
         }
 
         public Guid Id { get; }
+        public CommandHistory History => _history;
 
         public void DecreaseBalance(decimal sum)
         {

@@ -20,9 +20,12 @@ namespace Banks.Models
 
             FirstName = firstName;
             LastName = lastName;
+            Id = Guid.NewGuid();
         }
 
         public event EventHandler AdditionalDataChanged;
+
+        public Guid Id { get; }
 
         public string FirstName { get; }
         public string LastName { get; }

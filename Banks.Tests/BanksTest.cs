@@ -36,8 +36,7 @@ namespace Banks.Tests
         [Test]
         public void CreateBankAddUser_BankContainsUser()
         {
-            IBankAccount account = _baseBank.CreateAccount(_bank, _testClient, AccountType.Debit);
-
+            _baseBank.CreateAccount(_bank, _testClient, AccountType.Debit);
             CollectionAssert.Contains(_baseBank.BankClients(_bank), _testClient);
         }
 

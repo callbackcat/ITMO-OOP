@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Banks.Enums;
 using Banks.Factories;
 using Banks.Models.BankAccounts;
@@ -20,6 +21,8 @@ namespace Banks.Models
         }
 
         public event EventHandler<BankNotification> RaiseInformEvent;
+
+        public IReadOnlyList<Bank> Banks => _banks;
 
         public static BaseBank GetInstance() => _instance ??= new BaseBank();
 
@@ -74,7 +77,7 @@ namespace Banks.Models
             }
         }
 
-        public IReadOnlyCollection<Client> BankClients(Bank bank) => bank.GetClients();
+        public IReadOnlyCollection<Client> BankClients(Bank bank) => bank.GetClients().Keys.ToList();
         private void OnBankEvent(BankNotification info) => RaiseInformEvent?.Invoke(this, info);
         private bool IsRegisteredBank(Bank bank) => _banks.Contains(bank);
     }

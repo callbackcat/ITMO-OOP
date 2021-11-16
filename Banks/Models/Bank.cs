@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using Banks.Enums;
 using Banks.Models.BankAccounts;
@@ -130,7 +129,7 @@ namespace Banks.Models
         }
 
         internal void InformClients(string message) => OnAccountChangeEvent(new ClientNotification(message));
-        internal IReadOnlyCollection<Client> GetClients() => _clients.Keys;
+        internal IReadOnlyDictionary<Client, List<IBankAccount>> GetClients() => _clients;
 
         private void HandleInformEvent(object sender, BankNotification info)
         {
