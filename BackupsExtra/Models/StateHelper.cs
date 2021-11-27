@@ -24,7 +24,10 @@ namespace BackupsExtra.Models
         public static BackupJob GetProgramState(string jsonPath)
         {
             string json = File.ReadAllText(jsonPath);
-            return JsonConvert.DeserializeObject<BackupJob>(json);
+            return JsonConvert.DeserializeObject<BackupJob>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+            });
         }
     }
 }
