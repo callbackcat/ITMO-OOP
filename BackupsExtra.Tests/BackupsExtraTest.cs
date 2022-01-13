@@ -23,12 +23,22 @@ namespace BackupsExtra.Tests
         [SetUp]
         public void Setup()
         {
-            var fileA = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt");
-            var fileB = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt");
-            var fileC = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileC.txt");
-            var fileD = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileD.txt");
+           var a = File.Create(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt");
+           var b = File.Create(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt");
+           var c = File.Create(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileC.txt");
+           var d = File.Create(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileD.txt");
 
-            _files = new List<FileDescription>
+           a.Close();
+           b.Close();
+           c.Close();
+           d.Close();
+
+           var fileA = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt");
+           var fileB = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt");
+           var fileC = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileC.txt");
+           var fileD = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileD.txt");
+
+           _files = new List<FileDescription>
             {
                 new FileDescription(fileA.FullName, fileA.Name, fileA.DirectoryName, fileA.Extension),
                 new FileDescription(fileB.FullName, fileB.Name, fileB.DirectoryName, fileB.Extension),
