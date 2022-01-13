@@ -23,10 +23,10 @@ namespace BackupsExtra.Tests
         [SetUp]
         public void Setup()
         {
-            var fileA = new FileInfo(@$"{Directory.GetCurrentDirectory()}\FileA.txt");
-            var fileB = new FileInfo(@$"{Directory.GetCurrentDirectory()}\FileB.txt");
-            var fileC = new FileInfo(@$"{Directory.GetCurrentDirectory()}\FileC.txt");
-            var fileD = new FileInfo(@$"{Directory.GetCurrentDirectory()}\FileD.txt");
+            var fileA = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt");
+            var fileB = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt");
+            var fileC = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileC.txt");
+            var fileD = new FileInfo(@$"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileD.txt");
 
             _files = new List<FileDescription>
             {
