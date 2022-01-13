@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace BackupsExtra.Tests
 {
-    public class Tests
+    public class BackupsExtraTest
     {
         private List<FileDescription> _files;
 
@@ -33,7 +33,7 @@ namespace BackupsExtra.Tests
                 new FileDescription(fileA.FullName, fileA.Name, fileA.DirectoryName, fileA.Extension),
                 new FileDescription(fileB.FullName, fileB.Name, fileB.DirectoryName, fileB.Extension),
                 new FileDescription(fileC.FullName, fileC.Name, fileC.DirectoryName, fileC.Extension),
-                new FileDescription(fileD.FullName, fileD.Name, fileD.DirectoryName, fileD.Extension)
+                new FileDescription(fileD.FullName, fileD.Name, fileD.DirectoryName, fileD.Extension),
             };
         }
 
@@ -99,7 +99,7 @@ namespace BackupsExtra.Tests
 
             var cleaningAlgorithms = new List<ICleaningAlgorithm>
             {
-                cleaningAlgorithmCount, cleaningAlgorithmDate
+                cleaningAlgorithmCount, cleaningAlgorithmDate,
             };
 
             ICleaningAlgorithm hybridCleaningAlgorithm
@@ -110,7 +110,7 @@ namespace BackupsExtra.Tests
             backupJob.AddFile(_files[0]);
             backupJob.AddFile(_files[1]);
 
-            //  One point should be deleted by DateAlgorithm, two points by CountAlgorithm
+            // One point should be deleted by DateAlgorithm, two points by CountAlgorithm
             // ===> must be one restore point remaining
             backupJob.CreateRestorePoint(yesterday);
             backupJob.CreateRestorePoint(edgeDate);
@@ -140,7 +140,7 @@ namespace BackupsExtra.Tests
 
             var cleaningAlgorithms = new List<ICleaningAlgorithm>
             {
-                cleaningAlgorithmCount, cleaningAlgorithmDate
+                cleaningAlgorithmCount, cleaningAlgorithmDate,
             };
 
             ICleaningAlgorithm hybridCleaningAlgorithm
@@ -151,7 +151,7 @@ namespace BackupsExtra.Tests
             backupJob.AddFile(_files[0]);
             backupJob.AddFile(_files[1]);
 
-            //  Two points should be deleted by DateAlgorithm, three points by CountAlgorithm
+            // Two points should be deleted by DateAlgorithm, three points by CountAlgorithm
             // ===> must be two restore point remaining
             backupJob.CreateRestorePoint(yesterday);
             backupJob.CreateRestorePoint(yesterday);
@@ -194,8 +194,8 @@ namespace BackupsExtra.Tests
             backupJob.AddFile(_files[0]);
             RestorePoint newA = backupJob.CreateRestorePoint(creationTime);
 
-            var oldPoint = new List<RestorePoint> {a, b, c};
-            var newPoint = new List<RestorePoint> {newA, d};
+            var oldPoint = new List<RestorePoint> { a, b, c };
+            var newPoint = new List<RestorePoint> { newA, d };
 
             new RestoresMerge(oldPoint, newPoint).MergeRestorePoints(directory);
             Assert.AreEqual(5, backupJob.Backup.RestorePoints.Count);
