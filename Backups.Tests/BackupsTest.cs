@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Backups.Tests
 {
+    [Ignore("Based on file system xD")]
     public class Tests
     {
         private List<FileInfo> _files;
