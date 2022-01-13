@@ -18,7 +18,7 @@ namespace BackupsExtra.Models.Repositories
                 case SingleStorageAlgorithm:
                 {
                     var guid = Guid.NewGuid();
-                    string newPath = $"{path}\\RestorePoint_{guid}.zip";
+                    string newPath = $"{path}{Path.DirectorySeparatorChar}RestorePoint_{guid}.zip";
                     storage.Add(new Storage(newPath));
 
                     using ZipArchive archive = ZipFile.Open(newPath, ZipArchiveMode.Create);
@@ -28,7 +28,7 @@ namespace BackupsExtra.Models.Repositories
                             string newFileName = $"{Path.GetFileNameWithoutExtension(file.Name)}" +
                                                  $"_backedup_{guid}{file.Extension}";
 
-                            var info = new FileInfo($"{newPath}\\{newFileName}");
+                            var info = new FileInfo($"{newPath}{Path.DirectorySeparatorChar}{newFileName}");
 
                             storage[0].AddFile(new FileDescription(info.FullName, info.Name, info.DirectoryName, info.Extension));
 
@@ -46,7 +46,7 @@ namespace BackupsExtra.Models.Repositories
                         string newFileName = $"{Path.GetFileNameWithoutExtension(file.Name)}" +
                                              $"_backedup_{Guid.NewGuid()}";
 
-                        string newPath = $"{path}\\{newFileName}.zip";
+                        string newPath = $"{path}{Path.DirectorySeparatorChar}{newFileName}.zip";
 
                         var st = new Storage(newPath);
                         st.AddFile(new FileDescription(file.FullName, file.Name, file.DirectoryName, file.Extension));

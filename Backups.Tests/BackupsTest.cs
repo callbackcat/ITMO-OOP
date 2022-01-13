@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Backups.Tests
 {
+    [Ignore("Based on file system xD")]
     public class Tests
     {
         private List<FileInfo> _files;
@@ -13,10 +14,16 @@ namespace Backups.Tests
         [SetUp]
         public void Setup()
         {
+            var a = File.Create($@"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt");
+            var b = File.Create($@"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt");
+
+            a.Close();
+            b.Close();
+
             _files = new List<FileInfo>
             {
-                new FileInfo($@"{Directory.GetCurrentDirectory()}\FileA.txt"),
-                new FileInfo($@"{Directory.GetCurrentDirectory()}\FileB.txt")
+                new FileInfo($@"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileA.txt"),
+                new FileInfo($@"{Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}FileB.txt")
             };
         }
 

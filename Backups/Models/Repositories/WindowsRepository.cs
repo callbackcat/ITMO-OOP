@@ -30,7 +30,7 @@ namespace Backups.Models.Repositories
                             string newFileName = $"{Path.GetFileNameWithoutExtension(file.Name)}" +
                                                  $"_backedup{time:dd/MM/yyyy_HH-mm-ss}{file.Extension}";
 
-                            storage[0].AddFile(new FileInfo($"{newPath}\\{newFileName}"));
+                            storage[0].AddFile(new FileInfo($"{newPath}{Path.DirectorySeparatorChar}{newFileName}"));
 
                             archive.CreateEntryFromFile(file.FullName, newFileName);
                         }
@@ -49,7 +49,7 @@ namespace Backups.Models.Repositories
                         string newFileName = $"{Path.GetFileNameWithoutExtension(file.Name)}" +
                                              $"_backedup{time:dd/MM/yyyy_HH-mm-ss}";
 
-                        string newPath = $"{path}\\{newFileName}.zip";
+                        string newPath = $"{path}{Path.DirectorySeparatorChar}{newFileName}.zip";
 
                         var st = new Storage();
                         st.AddFile(new FileInfo(newPath));
