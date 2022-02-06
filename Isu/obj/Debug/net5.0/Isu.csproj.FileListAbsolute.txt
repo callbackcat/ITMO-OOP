@@ -1,0 +1,16 @@
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.exe
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.deps.json
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.runtimeconfig.json
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.runtimeconfig.dev.json
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.dll
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\ref\Isu.dll
+C:\Users\user\RiderProjects\oop\Isu\bin\Debug\net5.0\Isu.pdb
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.csproj.AssemblyReference.cache
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.AssemblyInfoInputs.cache
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.AssemblyInfo.cs
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.csproj.CoreCompileInputs.cache
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.dll
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\ref\Isu.dll
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.pdb
+C:\Users\user\RiderProjects\oop\Isu\obj\Debug\net5.0\Isu.genruntimeconfig.cache

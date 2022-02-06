@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "liNbGryTjMyUr5+Bscab4Znlhb9OMgMRU+72xRgpSXKLoMH7ZIiX0MTUHp2EsijEj2iHbooXpWwZctfR7cQ7Eg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\user\\RiderProjects\\oop\\IsuExtra\\IsuExtra.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
+  ],
+  "logs": []
+}
